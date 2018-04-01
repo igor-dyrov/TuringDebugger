@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/TM.dir/test.cpp.o  -o TM 
