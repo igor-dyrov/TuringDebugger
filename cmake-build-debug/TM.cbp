@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/igor/Documents/CLionProjects/TM/TM.cpp">
+			<Option target="TM"/>
+		</Unit>
+		<Unit filename="/home/igor/Documents/CLionProjects/TM/TM.hpp">
+			<Option target="TM"/>
+		</Unit>
 		<Unit filename="/home/igor/Documents/CLionProjects/TM/test.cpp">
 			<Option target="TM"/>
 		</Unit>

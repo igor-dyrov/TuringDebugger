@@ -3,5 +3,5 @@ project(TM)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(Header TM.h)
-add_executable(TM test.cpp)
+set(Header TM.hpp)
+add_executable(TM test.cpp TM.cpp)
