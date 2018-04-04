@@ -15,6 +15,7 @@ namespace Turing {
     enum ResultCode {EndOfProgram, NormalWork, NoSuitableCommand};
     struct Command {
         enum direction { Right, Left, Center } move;
+        void InitByString(const std::string &);
         symbol new_symbol;
         state new_state;
     };
@@ -36,15 +37,14 @@ namespace Turing {
     };
 
     class Handler {
-    public:
+    private:
         int temp_index;
         state temp_state;
         state beg_state;
         std::vector<state> end_states;
         transitions_set transitions;
         Belt belt;
-        Turing::Command get_transition(const std::pair<state, symbol> &);
-    //public:
+    public:
         Handler(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
         ResultCode OneStep();
     };

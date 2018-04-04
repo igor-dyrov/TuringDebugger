@@ -39,20 +39,12 @@ namespace Turing {
     }
 }
 
-Turing::Command Turing::Handler::get_transition(const std::pair<state, symbol> &key) {
-    for (auto const &i : transitions) {
-        if (i.first.first == key.first && i.first.second == key.second)
-            return i.second;
-    }
-    return Turing::Command();
-}
-
 Turing::Handler::Handler(const transitions_set &dict, const Belt &new_belt,
                          const state &beg, const std::vector<state> &end) {
     transitions = dict;
     belt = new_belt;
     beg_state = beg;
-    temp_state = beg;
+    temp_state = beg_state;
     end_states = end;
     temp_index = 0;
 }
