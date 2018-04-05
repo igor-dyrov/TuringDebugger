@@ -6,7 +6,7 @@
 
 using symbol = std::string;
 using state = std::string;
-using belt_type = std::map<int, std::string>;
+using belt_type = std::map<int, symbol>;
 
 template <class T>
 bool Owns(const std::vector<T> &, const T &);
