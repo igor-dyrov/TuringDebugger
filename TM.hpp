@@ -13,6 +13,16 @@ bool Owns(const std::vector<T> &, const T &);
 
 namespace Turing {
     enum ResultCode {EndOfProgram, NormalWork, NoSuitableCommand};
+    struct Situation {
+        state _state;
+        symbol _symbol;
+        friend bool operator < (const Situation &, const Situation &);
+        friend bool operator > (const Situation &, const Situation &);
+        friend bool operator <= (const Situation &, const Situation &);
+        friend bool operator >= (const Situation &, const Situation &);
+        friend bool operator == (const Situation &, const Situation &);
+        friend bool operator != (const Situation &, const Situation &);
+    };
     struct Command {
         enum direction { Right, Left, Center } move;
         void InitByString(const std::string &);
@@ -21,7 +31,7 @@ namespace Turing {
     };
 }
 
-using transitions_set = std::map<std::pair<state, symbol>, Turing::Command>;
+using transitions_set = std::map<Turing::Situation, Turing::Command>;
 
 namespace Turing {
     class Belt {

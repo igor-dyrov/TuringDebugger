@@ -9,6 +9,31 @@ bool Owns(const std::vector<T> &set, const T &elem) {
     return false;
 }
 
+namespace Turing {
+    bool operator<(const Situation &s1, const Situation &s2) {
+        return s1._state < s2._state;
+    }
+
+    bool operator<=(const Situation &s1, const Situation &s2) {
+        return s1._state <= s2._state;
+    }
+
+    bool operator>(const Situation &s1, const Situation &s2) {
+        return s1._state > s2._state;
+    }
+
+    bool operator>=(const Situation &s1, const Situation &s2) {
+        return s1._state >= s2._state;
+    }
+
+    bool operator==(const Situation &s1, const Situation &s2) {
+        return s1._state == s2._state && s1._symbol == s2._symbol;
+    }
+
+    bool operator!=(const Situation &s1, const Situation &s2) {
+        return s1._state != s2._state || s1._symbol != s2._symbol;
+    }
+}
 Turing::Belt::Belt(const belt_type &belt) {
     internal_belt = belt;
 }
@@ -51,9 +76,9 @@ Turing::Handler::Handler(const transitions_set &dict, const Belt &new_belt,
 
 Turing::ResultCode Turing::Handler::OneStep() {
     if (!Owns(end_states, temp_state)) {
-        std::pair<state, symbol> temp;
-        temp.first = temp_state;
-        temp.second = belt[temp_index];
+        Situation temp;
+        temp._state = temp_state;
+        temp._symbol = belt[temp_index];
         Command to_do = transitions[temp];
         if (to_do.new_state == "" || to_do.new_symbol == "")
             return NoSuitableCommand;
