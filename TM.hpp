@@ -57,5 +57,7 @@ namespace Turing {
     public:
         Handler(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
         ResultCode OneStep();
+        void SetBegState(const state &);
+        void SetEndStates(const std::vector<state> &);
     };
 }

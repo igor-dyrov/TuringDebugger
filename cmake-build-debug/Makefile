@@ -123,6 +123,33 @@ TM/fast:
 	$(MAKE) -f CMakeFiles/TM.dir/build.make CMakeFiles/TM.dir/build
 .PHONY : TM/fast
 
+Lang.o: Lang.cpp.o
+
+.PHONY : Lang.o
+
+# target to build an object file
+Lang.cpp.o:
+	$(MAKE) -f CMakeFiles/TM.dir/build.make CMakeFiles/TM.dir/Lang.cpp.o
+.PHONY : Lang.cpp.o
+
+Lang.i: Lang.cpp.i
+
+.PHONY : Lang.i
+
+# target to preprocess a source file
+Lang.cpp.i:
+	$(MAKE) -f CMakeFiles/TM.dir/build.make CMakeFiles/TM.dir/Lang.cpp.i
+.PHONY : Lang.cpp.i
+
+Lang.s: Lang.cpp.s
+
+.PHONY : Lang.s
+
+# target to generate assembly for a file
+Lang.cpp.s:
+	$(MAKE) -f CMakeFiles/TM.dir/build.make CMakeFiles/TM.dir/Lang.cpp.s
+.PHONY : Lang.cpp.s
+
 TM.o: TM.cpp.o
 
 .PHONY : TM.o
@@ -186,6 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... TM"
+	@echo "... Lang.o"
+	@echo "... Lang.i"
+	@echo "... Lang.s"
 	@echo "... TM.o"
 	@echo "... TM.i"
 	@echo "... TM.s"
