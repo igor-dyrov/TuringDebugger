@@ -3,6 +3,8 @@
 #include <map>
 #include <functional>
 #include <algorithm>
+#include <queue>
+#include <boost/regex.hpp>
 
 using symbol = std::string;
 using state = std::string;
@@ -57,6 +59,7 @@ namespace Turing {
     public:
         Handler(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
         ResultCode OneStep();
+        void clear();
         void SetBegState(const state &);
         void SetEndStates(const std::vector<state> &);
     };

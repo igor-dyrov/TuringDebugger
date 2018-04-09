@@ -1,4 +1,16 @@
 /home/igor/Documents/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/igor/Documents/CLionProjects/TM
+CMake Warning at /home/igor/Documents/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/FindBoost.cmake:786 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /home/igor/Documents/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/FindBoost.cmake:892 (_Boost_COMPONENT_DEPENDENCIES)
+  /home/igor/Documents/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/FindBoost.cmake:1523 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:6 (find_package)
+
+
+-- Boost version: 1.66.0
+-- Found the following Boost libraries:
+--   regex
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/igor/Documents/CLionProjects/TM/cmake-build-debug

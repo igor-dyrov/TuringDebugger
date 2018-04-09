@@ -142,6 +142,7 @@ TM: CMakeFiles/TM.dir/test.cpp.o
 TM: CMakeFiles/TM.dir/TM.cpp.o
 TM: CMakeFiles/TM.dir/Lang.cpp.o
 TM: CMakeFiles/TM.dir/build.make
+TM: /usr/local/lib/libboost_regex.so
 TM: CMakeFiles/TM.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable TM"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TM.dir/link.txt --verbose=$(VERBOSE)

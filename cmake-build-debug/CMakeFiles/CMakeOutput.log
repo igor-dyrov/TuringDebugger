@@ -615,3 +615,31 @@ make[1]: Leaving directory '/home/igor/Documents/CLionProjects/TM/cmake-build-de
     Feature record: CXX_FEATURE:0cxx_variable_templates
     Feature record: CXX_FEATURE:0cxx_variadic_macros
     Feature record: CXX_FEATURE:0cxx_variadic_templates
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f57fe/fast"
+/usr/bin/make -f CMakeFiles/cmTC_f57fe.dir/build.make CMakeFiles/cmTC_f57fe.dir/build
+make[1]: Entering directory '/home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f57fe.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_f57fe.dir/CheckIncludeFile.c.o   -c /home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_f57fe
+/home/igor/Documents/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f57fe.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_f57fe.dir/CheckIncludeFile.c.o  -o cmTC_f57fe 
+make[1]: Leaving directory '/home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+
+Determining if the function pthread_create exists in the pthread passed with the following output:
+Change Dir: /home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_477a2/fast"
+/usr/bin/make -f CMakeFiles/cmTC_477a2.dir/build.make CMakeFiles/cmTC_477a2.dir/build
+make[1]: Entering directory '/home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_477a2.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_477a2.dir/CheckFunctionExists.c.o   -c /home/igor/Documents/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/CheckFunctionExists.c
+Linking C executable cmTC_477a2
+/home/igor/Documents/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_477a2.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_477a2.dir/CheckFunctionExists.c.o  -o cmTC_477a2 -lpthread 
+make[1]: Leaving directory '/home/igor/Documents/CLionProjects/TM/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+

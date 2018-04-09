@@ -2,7 +2,7 @@
 
 int main()
 {
-    std::vector<Turing::Command> commands(9);
+    /*std::vector<Turing::Command> commands(9);
     commands[0].new_symbol = "1";
     commands[0].new_state = "q1";
     commands[0].move = Turing::Command::Right;
@@ -46,7 +46,22 @@ int main()
     Turing::ResultCode code = Turing::NormalWork;
     while (code == Turing::NormalWork) {
         code = TM.OneStep();
+    }*/
+    std::string s = "set_begin  { qqq, aaa, q1q1, R, s }";
+    boost::regex expr{"(?<command>(\\w+))(\\s)*{(?<options>((\\s)*(\\w)+,*(\\s)*)*)}"};
+    boost::smatch what;
+    if (boost::regex_search(s, what, expr))
+    {
+        //std::cout << what["command"] << " " << what["options"] << '\n';
     }
+    s = what["options"];
+    //std::cout << s;
+    expr = {"\\w+"};//{"(\\s*\\w+,?\\s*){5,5}"};//{"(\\s*(\\w)+,?\\s*)*"};
+    std::string format("$1");
+    boost::sregex_iterator xIt(s.begin(), s.end(), expr);
+    boost::sregex_iterator empty;
+    while(xIt != empty)
+        std::cout << *xIt++ << " ";
     return 0;
 }
 
