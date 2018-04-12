@@ -1,9 +1,13 @@
-#include "TM.hpp"
+#include "settings.hpp"
 
 class KeyWord;
 class Options;
 
-class TuringRequest;
+struct TuringRequest {
+    enum Command {set_beg, set_end, transition} type_of_action;
+    std::vector<std::string> params;
+};
+
 class InterpretException {
 public:
     InterpretException();
@@ -13,31 +17,29 @@ private:
     std::string exception_message;
 };
 
-using request_pool = std::queue<TuringRequest>;
-
 class TuringInterpreter {
 public:
     TuringInterpreter();
+    TuringInterpreter(int){};
     request_pool Interpret(const std::string &);
     virtual ~TuringInterpreter();
 protected:
-    virtual void configure_pool(const std::string &, request_pool &);
+    virtual void get_request(const std::string &, TuringRequest &){}
 private:
-    std::string end_of_line();
     TuringInterpreter *key_word;
     TuringInterpreter *options;
 };
 
 class KeyWord : public TuringInterpreter {
 public:
-    KeyWord() : TuringInterpreter(){}
+    KeyWord() : TuringInterpreter(1){}
 protected:
-    void configure_pool(const std::string &, request_pool &);
+    void get_request(const std::string &, TuringRequest &);
 };
 
 class Options : public TuringInterpreter {
 public:
-    Options() : TuringInterpreter(){}
+    Options() : TuringInterpreter(1){}
 protected:
-    void configure_pool(const std::string &, request_pool &);
+    void get_request(const std::string &, TuringRequest &);
 };

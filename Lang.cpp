@@ -12,9 +12,9 @@ std::string InterpretException::what() {
     return exception_message;
 }
 
-void TuringInterpreter::TuringInterpreter() {
-    key_word = new KeyWord;
-    options = new Options;
+TuringInterpreter::TuringInterpreter() {
+    key_word = new KeyWord();
+    options = new Options();
 }
 
 TuringInterpreter::~TuringInterpreter() {
@@ -24,16 +24,51 @@ TuringInterpreter::~TuringInterpreter() {
 
 request_pool TuringInterpreter::Interpret(const std::string &candidate) {
     request_pool result;
-    boost::regex basic_expr{"(?<command>(\\w+))(\\s)*{(?<options>((\\s)*(\\w)+,*(\\s)*)*)}"};
-    boost::smatch what;
-    if (boost::regex_search(candidate, what, basic_expr)) {
-        key_word->configure_pool(what["command"], result);
-        options->configure_pool(what["options"], result);
+    boost::regex first_basic_expr{"(?<command>(\\w+))(\\s)*{(?<options>((\\s)*(\\w)+,*(\\s)*)*)}"};
+    boost::regex second_basic_expr{"(?<cmd1>(\\w+))(\\s)*"
+                                            "{(?<opt1>((\\s)*(\\w)+,*(\\s)*)*)}"
+                                            "\\s*(?<cmd2>(\\w+))(\\s)*"
+                                            "{(?<opt2>((\\s)*(\\w)+,*(\\s)*)*)}"};
+    boost::regex parser{".*?;"};
+    boost::sregex_iterator xIt(candidate.begin(), candidate.end(), parser);
+    while (xIt != boost::sregex_iterator{}){
+        boost::smatch what;
+        TuringRequest temp;
+        if (boost::regex_search(xIt->str(), what, first_basic_expr)) {
+            key_word->get_request(what["command"], temp);
+            options->get_request(what["options"], temp);
+            result.push(temp);
+        }
+        else if  (boost::regex_search(xIt->str(), what, second_basic_expr)) {
+            std::string united_command = what["cmd1"] + what["cmd2"];
+            std::string united_options = what["opt1"] + what["opt2"];
+            key_word->get_request(united_command, temp);
+            options->get_request(united_options, temp);
+            result.push(temp);
+        }
+        else
+            throw InterpretException("Check basic construction grammar");
+        ++xIt;
     }
-    else
-        throw InterpretException("Check basic grammar");
+    return result;
 }
 
-void KeyWord::configure_pool(const std::string &, request_pool &) {
+void KeyWord::get_request(const std::string &cmd, TuringRequest &request) {
+    if (cmd == "set_begin")
+        request.type_of_action = request.set_beg;
+    else if(cmd == "set_end")
+        request.type_of_action = request.set_end;
+    else if (cmd == "indo")
+        request.type_of_action = request.transition;
+    else
+        throw Interpret("Bad command");
+}
 
+void Options::get_request(const std::string &opt, TuringRequest &request) {
+    boost::regex param_expr{"\\w+"};
+    boost::sregex_iterator itr(opt.begin(), opt.end(), param_expr);
+    while (itr != boost::sregex_iterator{}) {
+        request.params.push_back(itr->str());
+        ++itr;
+    }
 }

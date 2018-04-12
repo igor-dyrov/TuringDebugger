@@ -1,12 +1,11 @@
 #include "TM.hpp"
+#include "Lang.hpp"
 
-template <class T>
-bool Owns(const std::vector<T> &set, const T &elem) {
-    for (auto const &i : set) {
-        if (i == elem)
-            return true;
-    }
-    return false;
+int get_min_key(belt_type &belt) {
+    if (belt.empty())
+        return 0;
+    else
+        return belt.begin()->first;
 }
 
 namespace Turing {
@@ -34,24 +33,35 @@ namespace Turing {
         return s1._state != s2._state || s1._symbol != s2._symbol;
     }
 }
+
+Turing::Belt::Belt() {
+    beg_index = 0;
+}
+
 Turing::Belt::Belt(const belt_type &belt) {
     internal_belt = belt;
+    beg_index = get_min_key(internal_belt);
 }
 
 Turing::Belt& Turing::Belt::operator=(const Turing::Belt & obj) {
     internal_belt = obj.internal_belt;
+    beg_index = obj.beg_index;
     return *this;
 }
 
+int Turing::Belt::Begin() { return beg_index; }
+
+void Turing::Belt::clear() {
+    internal_belt.clear();
+    beg_index = 0;
+}
+
 symbol& Turing::Belt::operator[](int index) {
-    bool has_key = false;
-    for (auto const &i : internal_belt) {
-        if (i.first == index)
-            has_key = true;
-    }
-    if (!has_key) {
+    if (std::find_if(internal_belt.begin(), internal_belt.end(),[&index](auto &i){
+        if (i.first == index) return true; return false;})== internal_belt.end()) {
         internal_belt.insert({index, lambda});
     }
+    beg_index = get_min_key(internal_belt);
     return internal_belt[index];
 }
 
@@ -71,11 +81,11 @@ Turing::Handler::Handler(const transitions_set &dict, const Belt &new_belt,
     beg_state = beg;
     temp_state = beg_state;
     end_states = end;
-    temp_index = 0;
+    temp_index = belt.Begin();
 }
 
 Turing::ResultCode Turing::Handler::OneStep() {
-    if (!Owns(end_states, temp_state)) {
+    if (std::find(end_states.begin(), end_states.end(),temp_state) == end_states.end()) {
         Situation temp;
         temp._state = temp_state;
         temp._symbol = belt[temp_index];
@@ -89,11 +99,45 @@ Turing::ResultCode Turing::Handler::OneStep() {
             --temp_index;
         temp_state = to_do.new_state;
         std::cout << belt;
-        if (!Owns(end_states, temp_state))
+        if (std::find(end_states.begin(), end_states.end(),temp_state) == end_states.end())
             return ResultCode::NormalWork;
         else
             return ResultCode::EndOfProgram;
     }
     else return ResultCode::EndOfProgram;
+}
+
+void Turing::Handler::clear() {
+    beg_state = "";
+    end_states.clear();
+    temp_state = "";
+    temp_index = belt.Begin();
+    transitions.clear();
+}
+
+void Turing::Handler::SetCommands(request_pool &pool) {
+    while (!pool.empty()) {
+        auto request = pool.front();
+        if (request.type_of_action == TuringRequest::set_beg) {
+            beg_state = request.params[0];
+            pool.pop();
+        }
+        else if (request.type_of_action == TuringRequest::set_end) {
+            end_states.clear();
+            for (auto &i : request.params)
+                end_states.push_back(i);
+        }
+        else if(request.type_of_action == TuringRequest::transition) {
+            transitions.clear();
+            Turing::Command cmd;
+            if (request.params[2] == "L")
+                cmd.move = Turing::Command::Left;
+            else if (request.params[2] == "R")
+                cmd.move = Turing::Command::Right;
+            else
+                cmd.move = Turing::Command::Center;
+            transitions.insert({Turing::Situation{request.params[0],request.params[1]}, cmd});
+        }
+    }
 }
 

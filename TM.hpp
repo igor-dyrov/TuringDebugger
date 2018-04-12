@@ -1,17 +1,6 @@
-#include <iostream>
-#include <vector>
-#include <map>
-#include <functional>
-#include <algorithm>
-#include <queue>
-#include <boost/regex.hpp>
+#include "settings.hpp"
 
-using symbol = std::string;
-using state = std::string;
-using belt_type = std::map<int, symbol>;
-
-template <class T>
-bool Owns(const std::vector<T> &, const T &);
+int get_min_key(belt_type &);
 
 namespace Turing {
     enum ResultCode {EndOfProgram, NormalWork, NoSuitableCommand};
@@ -27,22 +16,22 @@ namespace Turing {
     };
     struct Command {
         enum direction { Right, Left, Center } move;
-        void InitByString(const std::string &);
         symbol new_symbol;
         state new_state;
     };
 }
-
-using transitions_set = std::map<Turing::Situation, Turing::Command>;
 
 namespace Turing {
     class Belt {
     private:
         const symbol lambda = "lambda";
         belt_type internal_belt;
+        int beg_index;
     public:
-        Belt(){};
+        Belt();
         Belt(const belt_type&);
+        void clear();
+        int Begin();
         Belt& operator = (const Belt &);
         symbol& operator[](int);
         friend std::ostream & operator << (std::ostream &, const Belt &);
@@ -60,7 +49,6 @@ namespace Turing {
         Handler(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
         ResultCode OneStep();
         void clear();
-        void SetBegState(const state &);
-        void SetEndStates(const std::vector<state> &);
+        void SetCommands(request_pool &);
     };
 }

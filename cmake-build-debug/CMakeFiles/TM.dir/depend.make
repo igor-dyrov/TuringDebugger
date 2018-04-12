@@ -3,7 +3,7 @@
 
 CMakeFiles/TM.dir/Lang.cpp.o: ../Lang.cpp
 CMakeFiles/TM.dir/Lang.cpp.o: ../Lang.hpp
-CMakeFiles/TM.dir/Lang.cpp.o: ../TM.hpp
+CMakeFiles/TM.dir/Lang.cpp.o: ../settings.hpp
 CMakeFiles/TM.dir/Lang.cpp.o: /usr/local/include/boost/assert.hpp
 CMakeFiles/TM.dir/Lang.cpp.o: /usr/local/include/boost/checked_delete.hpp
 CMakeFiles/TM.dir/Lang.cpp.o: /usr/local/include/boost/config.hpp
@@ -506,8 +506,10 @@ CMakeFiles/TM.dir/Lang.cpp.o: /usr/local/include/boost/type_traits/type_with_ali
 CMakeFiles/TM.dir/Lang.cpp.o: /usr/local/include/boost/utility/enable_if.hpp
 CMakeFiles/TM.dir/Lang.cpp.o: /usr/local/include/boost/version.hpp
 
+CMakeFiles/TM.dir/TM.cpp.o: ../Lang.hpp
 CMakeFiles/TM.dir/TM.cpp.o: ../TM.cpp
 CMakeFiles/TM.dir/TM.cpp.o: ../TM.hpp
+CMakeFiles/TM.dir/TM.cpp.o: ../settings.hpp
 CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/assert.hpp
 CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/checked_delete.hpp
 CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/config.hpp
@@ -1010,7 +1012,8 @@ CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/type_traits/type_with_align
 CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/utility/enable_if.hpp
 CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/version.hpp
 
-CMakeFiles/TM.dir/test.cpp.o: ../TM.hpp
+CMakeFiles/TM.dir/test.cpp.o: ../Lang.hpp
+CMakeFiles/TM.dir/test.cpp.o: ../settings.hpp
 CMakeFiles/TM.dir/test.cpp.o: ../test.cpp
 CMakeFiles/TM.dir/test.cpp.o: /usr/local/include/boost/assert.hpp
 CMakeFiles/TM.dir/test.cpp.o: /usr/local/include/boost/checked_delete.hpp
