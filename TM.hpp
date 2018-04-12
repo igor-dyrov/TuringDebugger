@@ -8,9 +8,6 @@ namespace Turing {
         state _state;
         symbol _symbol;
         friend bool operator < (const Situation &, const Situation &);
-        friend bool operator > (const Situation &, const Situation &);
-        friend bool operator <= (const Situation &, const Situation &);
-        friend bool operator >= (const Situation &, const Situation &);
         friend bool operator == (const Situation &, const Situation &);
         friend bool operator != (const Situation &, const Situation &);
     };

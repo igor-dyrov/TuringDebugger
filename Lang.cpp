@@ -34,16 +34,17 @@ request_pool TuringInterpreter::Interpret(const std::string &candidate) {
     while (xIt != boost::sregex_iterator{}){
         boost::smatch what;
         TuringRequest temp;
-        if (boost::regex_search(xIt->str(), what, first_basic_expr)) {
-            key_word->get_request(what["command"], temp);
-            options->get_request(what["options"], temp);
-            result.push(temp);
-        }
-        else if  (boost::regex_search(xIt->str(), what, second_basic_expr)) {
+        std::string one_cmd = xIt->str();
+        if  (boost::regex_search(one_cmd, what, second_basic_expr)) {
             std::string united_command = what["cmd1"] + what["cmd2"];
             std::string united_options = what["opt1"] + what["opt2"];
             key_word->get_request(united_command, temp);
             options->get_request(united_options, temp);
+            result.push(temp);
+        }
+        else if (boost::regex_search(one_cmd, what, first_basic_expr)) {
+            key_word->get_request(what["command"], temp);
+            options->get_request(what["options"], temp);
             result.push(temp);
         }
         else
@@ -61,7 +62,7 @@ void KeyWord::get_request(const std::string &cmd, TuringRequest &request) {
     else if (cmd == "indo")
         request.type_of_action = request.transition;
     else
-        throw Interpret("Bad command");
+        throw InterpretException("Bad command");
 }
 
 void Options::get_request(const std::string &opt, TuringRequest &request) {

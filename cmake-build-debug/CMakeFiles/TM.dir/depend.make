@@ -1013,6 +1013,7 @@ CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/utility/enable_if.hpp
 CMakeFiles/TM.dir/TM.cpp.o: /usr/local/include/boost/version.hpp
 
 CMakeFiles/TM.dir/test.cpp.o: ../Lang.hpp
+CMakeFiles/TM.dir/test.cpp.o: ../TM.hpp
 CMakeFiles/TM.dir/test.cpp.o: ../settings.hpp
 CMakeFiles/TM.dir/test.cpp.o: ../test.cpp
 CMakeFiles/TM.dir/test.cpp.o: /usr/local/include/boost/assert.hpp

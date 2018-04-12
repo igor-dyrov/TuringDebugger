@@ -10,21 +10,9 @@ int get_min_key(belt_type &belt) {
 
 namespace Turing {
     bool operator<(const Situation &s1, const Situation &s2) {
-        return s1._state < s2._state;
+        return  (s1._state < s2._state ||
+                (s1._state == s2._state && s1._symbol < s2._symbol));
     }
-
-    bool operator<=(const Situation &s1, const Situation &s2) {
-        return s1._state <= s2._state;
-    }
-
-    bool operator>(const Situation &s1, const Situation &s2) {
-        return s1._state > s2._state;
-    }
-
-    bool operator>=(const Situation &s1, const Situation &s2) {
-        return s1._state >= s2._state;
-    }
-
     bool operator==(const Situation &s1, const Situation &s2) {
         return s1._state == s2._state && s1._symbol == s2._symbol;
     }
@@ -120,23 +108,27 @@ void Turing::Handler::SetCommands(request_pool &pool) {
         auto request = pool.front();
         if (request.type_of_action == TuringRequest::set_beg) {
             beg_state = request.params[0];
+            temp_state = beg_state;
             pool.pop();
         }
         else if (request.type_of_action == TuringRequest::set_end) {
             end_states.clear();
             for (auto &i : request.params)
                 end_states.push_back(i);
+            pool.pop();
         }
         else if(request.type_of_action == TuringRequest::transition) {
-            transitions.clear();
             Turing::Command cmd;
-            if (request.params[2] == "L")
+            if (request.params[4] == "L")
                 cmd.move = Turing::Command::Left;
-            else if (request.params[2] == "R")
+            else if (request.params[4] == "R")
                 cmd.move = Turing::Command::Right;
             else
                 cmd.move = Turing::Command::Center;
-            transitions.insert({Turing::Situation{request.params[0],request.params[1]}, cmd});
+            cmd.new_symbol = request.params[2];
+            cmd.new_state = request.params[3];
+            transitions.insert({Turing::Situation{request.params[1], request.params[0]}, cmd});
+            pool.pop();
         }
     }
 }

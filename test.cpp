@@ -1,4 +1,4 @@
-//#include "TM.hpp"
+#include "TM.hpp"
 #include "Lang.hpp"
 
 int main()
@@ -48,14 +48,17 @@ int main()
     while (code == Turing::NormalWork) {
         code = TM.OneStep();
     }*/
-    /*std::string s = "set_begin { qqq, aaa, q1q1, R } set_begin {qqq, aaa, q1q1, R}";
-    boost::regex expr{"(?<command>(\\w+))(\\s)*{(?<options>((\\s)*(\\w)+,*(\\s)*)*)}"};
+    /*std::string s = "in { qqq, aaa, q1q1, R } do {qqq, aaa, q1q1, R}";
+    boost::regex expr{"(?<cmd1>(\\w+))(\\s)*"
+                "{(?<opt1>((\\s)*(\\w)+,*(\\s)*)*)}"
+                "\\s*(?<cmd2>(\\w+))(\\s)*"
+                "{(?<opt2>((\\s)*(\\w)+,*(\\s)*)*)}"};
     boost::smatch what;
     if (boost::regex_search(s, what, expr))
     {
         //std::cout << what["options"] << '\n';
     }
-    std::string ss = what["options"];
+    std::string ss = what["cmd1"] + what["cmd2"];
     boost::regex param_expr{"\\w+"};
     boost::sregex_iterator xIt(ss.begin(), ss.end(), param_expr);
     while (xIt != boost::sregex_iterator{}){
@@ -66,7 +69,7 @@ int main()
     auto _pool = intr.Interpret(example);
     auto t = _pool.front().params;
     std::cout << t[0] << 's';*/
-    std::string s = "in{qqq,aaa}do{q2,s,R}";
+    /*std::string s = "in{qqq,aaa}do{q2,s,R}";
     boost::regex second_basic_expr{"(?<cmd1>(\\w+))(\\s)*"
                                            "{(?<opt1>((\\s)*(\\w)+,*(\\s)*)*)}"
                                            "\\s*(?<cmd2>(\\w+))(\\s)*"
@@ -74,7 +77,42 @@ int main()
     boost::sregex_iterator itr(s.begin(), s.end(), second_basic_expr);
     boost::smatch sm;
     boost::regex_search(s, sm, second_basic_expr);
-    std::cout << sm["cmd1"] << sm["cmd2"] << sm["opt1"] << sm["opt2"];
+    std::cout << sm["cmd1"] << sm["cmd2"] << sm["opt1"] << sm["opt2"];*/
+    belt_type b = {{0,"1"}, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
+    Turing::Belt belt(b);
+    Turing::Handler hn(transitions_set(), belt, "", {});
+    std::string obj = {     "in { 1, q1 } do { 1, q1, R }; \n"
+                            "in { 0,q1 } do { 0, q1, R };\n"
+                            "in { lambda, q1 } do { lambda, q2, L };\n"
+                            "in { 1, q2 } do { 0, q2, L };\n"
+                            "in { 0, q2 } do { 1, q3, L };\n"
+                            "in { lambda, q2 } do { 1, qs, C };\n"
+                            "in { 0, q3 } do { 0, q3, L };\n"
+                            "in { 1, q3 } do { 1, q3, L };\n"
+                            "in { lambda, q3 } do { lambda, qs, C };\n"
+                            "set_begin { q1 };\n"
+                            "set_end { qs };"};
+    /*boost::regex second_basic_expr{"(?<cmd1>(\\w+))(\\s)*"
+                                           "{(?<opt1>((\\s)*(\\w)+,*(\\s)*)*)}"
+                                           "\\s*(?<cmd2>(\\w+))(\\s)*"
+                                           "{(?<opt2>((\\s)*(\\w)+,*(\\s)*)*)}"};
+    boost::regex parser{".*?;"};
+    boost::sregex_iterator xIt(obj.begin(), obj.end(), parser);
+    while (xIt != boost::sregex_iterator{}) {
+        boost::smatch what;
+        std::string s = xIt->str();
+        boost::regex_search(s, what, second_basic_expr);
+        std::string ss = what["cmd1"] + what["cmd2"];
+        std::cout << ss;
+        ++xIt;
+    }*/
+    TuringInterpreter intr;
+    auto cmd = intr.Interpret(obj);
+    hn.SetCommands(cmd);
+    Turing::ResultCode code = Turing::NormalWork;
+    while (code == Turing::NormalWork) {
+        code = hn.OneStep();
+    }
     return 0;
 }
 
