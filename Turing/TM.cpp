@@ -123,6 +123,8 @@ void Turing::Handler::SetCommands(request_pool &pool) {
             pool.pop();
         }
         else if(request.type_of_action == TuringRequest::transition) {
+        	if (request.params.size() < 5)
+        		throw InterpretException("bad options");
             Turing::Command cmd;
             if (request.params[4] == "L")
                 cmd.move = Turing::Command::Left;

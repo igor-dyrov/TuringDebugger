@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/TM.dir/test.cpp.o CMakeFiles/TM.dir/TM.cpp.o CMakeFiles/TM.dir/Lang.cpp.o  -o TM -Wl,-rpath,/usr/local/lib /usr/local/lib/libboost_regex.so 
