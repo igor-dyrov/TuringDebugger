@@ -14,6 +14,7 @@ CONFIG += c++14
 
 INCLUDEPATH += /usr/local/include/
 LIBS += -L/usr/local/include/boost/ -lboost_system -lboost_regex
+LIBS += -L/usr/local/lib/ -lboost_system -lboost_regex
 
 SOURCES += main.cpp\
         mainwindow.cpp \
