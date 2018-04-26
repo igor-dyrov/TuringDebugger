@@ -1,3 +1,4 @@
 *.o
 *.pro.user
 .build-Turing-Desktop-Debug/
+build-Turing-Desktop-Debug/
