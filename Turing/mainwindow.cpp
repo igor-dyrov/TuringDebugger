@@ -29,6 +29,29 @@ void MainWindow::on_LoadCmdBtn_clicked()
     delete intr;
 }
 
+void MainWindow::on_actionSave_triggered()
+{
+    QMessageBox msgBox;
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    "Save file",
+                                                    "./");
+    msgBox.setText(fileName);
+    msgBox.exec();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Open","./");
+    ui->CommandsEdit->setText("Hello");
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    "Create",
+                                                     "./");
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
