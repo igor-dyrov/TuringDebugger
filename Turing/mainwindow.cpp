@@ -35,21 +35,42 @@ void MainWindow::on_actionSave_triggered()
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     "Save file",
                                                     "./");
-    msgBox.setText(fileName);
-    msgBox.exec();
+    QFile file(fileName);
+    if (!(file.open(QIODevice::WriteOnly)))
+    {
+        msgBox.setText("Permission denied");
+        msgBox.exec();
+        return;
+    }
+
+    QString text = ui->CommandsEdit->toPlainText();
+    file.write(text.toUtf8());
+    file.close();
 }
 
 void MainWindow::on_actionOpen_triggered()
 {
+    QMessageBox msgBox;
     QString fileName = QFileDialog::getOpenFileName(this, "Open","./");
     ui->CommandsEdit->setText("Hello");
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+           msgBox.setText("Can't open file");
+           msgBox.exec();
+           return;
+    }
+
+    QString text = file.readAll();
+    file.close();
+    ui->CommandsEdit->setText(text);
 }
 
 void MainWindow::on_actionNew_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    "Create",
-                                                     "./");
+    // Complete later                                                "Create",                                                     "./");
 }
 
 MainWindow::~MainWindow()
