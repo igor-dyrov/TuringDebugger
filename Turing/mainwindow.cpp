@@ -1,32 +1,39 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "TM.hpp"
+
+//static Turing::Handler& Debugger = Turing::Handler::instance();
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+    ui->btnStepBefore->setEnabled(false);
     //connect(Ui::MainWindow::LoadCmdBtn, SIGNAL (released()), this, SLOT (on_LoadCmdBtn_clicked()));
 }
 
 void MainWindow::on_LoadCmdBtn_clicked()
 {
+    Turing::Handler& Debugger = Turing::Handler::instance();
     belt_type b = {{0,"1"}, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
     Turing::Belt belt(b);
-    Turing::Handler hn(transitions_set(), belt, "", {});
+//    Turing::Handler hn(transitions_set(), belt, "", {});
+    Debugger.setFields(transitions_set(), belt, "", {});
     TuringInterpreter* intr = new TuringInterpreter;
     auto commands = ui->CommandsEdit->toPlainText();
     try {
     auto cmd = intr->Interpret(commands.toStdString());
-    hn.SetCommands(cmd);
-    Turing::ResultCode code = Turing::NormalWork;
-    while (code == Turing::NormalWork) {
-        code = hn.OneStep();
-    }
-    QMessageBox msgBox;
-    QString temp = QString::fromStdString(hn.GetBeltValues());
-    msgBox.setText(temp);
-    msgBox.exec();
+    Debugger.SetCommands(cmd);
+//    Turing::ResultCode code = Turing::NormalWork;
+//    while (code == Turing::NormalWork) {
+//        code = Debugger.OneStep();
+//    }
+//    QMessageBox msgBox;
+//    QString temp = QString::fromStdString(Debugger.GetBeltValues());
+//    msgBox.setText(temp);
+//    msgBox.exec();
     }
     catch (InterpretException e){
         QMessageBox msgBox;
@@ -84,4 +91,30 @@ void MainWindow::on_actionNew_triggered()
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_btnOneStep_clicked()
+{
+    ui->btnStepBefore->setEnabled(true);
+    Turing::Handler& Debugger = Turing::Handler::instance();
+    Debugger.OneStep();
+    QMessageBox msgBox;
+    QString temp = QString::fromStdString(Debugger.GetBeltValues());
+    msgBox.setText(temp);
+    msgBox.exec();
+
+}
+
+void MainWindow::on_btnStepBefore_clicked()
+{
+
+    Turing::Handler& Debugger = Turing::Handler::instance();
+
+    Debugger.StepBefore();
+    if ( Debugger.isFirst() )
+        ui->btnStepBefore->setEnabled(false);
+    QMessageBox msgBox;
+    QString temp = QString::fromStdString(Debugger.GetBeltValues());
+    msgBox.setText(temp);
+    msgBox.exec();
 }

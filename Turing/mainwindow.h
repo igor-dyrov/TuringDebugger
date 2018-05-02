@@ -31,6 +31,10 @@ private slots:
 
     void on_actionNew_triggered();
 
+    void on_btnOneStep_clicked();
+
+    void on_btnStepBefore_clicked();
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

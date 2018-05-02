@@ -1,3 +1,6 @@
+#ifndef __TM__
+#define __TM__
+
 #include "settings.hpp"
 
 int get_min_key(belt_type &);
@@ -34,19 +37,36 @@ namespace Turing {
         friend std::ostream & operator << (std::ostream &, const Belt &);
     };
 
+
     class Handler {
     private:
+        Handler() = default;
+        Handler(const Handler& );
+        Handler& operator =(const Handler );
         int temp_index;
         state temp_state;
         state beg_state;
         std::vector<state> end_states;
         transitions_set transitions;
         Belt belt;
+        struct change // хранит индекс, символ и состояние до перехода
+        {
+            change& operator =(const change& ) = default;
+            int temp_index;
+            state temp_state;
+            symbol s;
+        };
+        std::stack<change> history;
     public:
-        Handler(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
+        static Handler& instance();
+        void setFields(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
         ResultCode OneStep();
+        ResultCode StepBefore();
         std::string GetBeltValues();
         void clear();
         void SetCommands(request_pool &);
+        bool isFirst();
     };
 }
+
+#endif
