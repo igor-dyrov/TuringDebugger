@@ -124,7 +124,14 @@ void Turing::Handler::SetCommands(request_pool &pool) {
         }
         else if(request.type_of_action == TuringRequest::transition) {
         	if (request.params.size() < 5)
-        		throw InterpretException("bad options");
+            {
+                std::string er ="";
+                for (auto& obj : request.params ){
+                    er += obj;
+                    er += " ";
+                }
+                throw InterpretException("bad options: " + er);
+            }
             Turing::Command cmd;
             if (request.params[4] == "L")
                 cmd.move = Turing::Command::Left;

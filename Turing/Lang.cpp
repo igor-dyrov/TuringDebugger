@@ -28,11 +28,11 @@ TuringInterpreter::~TuringInterpreter() {
 
 request_pool TuringInterpreter::Interpret(const std::string &candidate) {
     request_pool result;
-    boost::regex first_basic_expr{"(?<command>(\\w+))(\\s)*{(?<options>((\\s)*(\\w)+,*(\\s)*)*)}"};
-    boost::regex second_basic_expr{"(?<cmd1>(\\w+))(\\s)*"
-                                            "{(?<opt1>((\\s)*(\\w)+,*(\\s)*)*)}"
-                                            "\\s*(?<cmd2>(\\w+))(\\s)*"
-                                            "{(?<opt2>((\\s)*(\\w)+,*(\\s)*)*)}"};
+    boost::regex first_basic_expr{ "(?<command>(\\w+))(\\s)*{(?<options>((\\s)*(\\w)+,*(\\s)*)*)}" };
+    boost::regex second_basic_expr{"(?<cmd1>(\\w*))(\\s)*"
+                                            "{(\\s)*(?<opt1>((\\s)*(\\w)+(\\s)*,*(\\s)*)*)}"
+                                            "(\\s)*(?<cmd2>(\\w+))(\\s)*"
+                                            "{(\\s)*(?<opt2>((\\s)*(\\w)+(\\s)*,*(\\s)*)*)}"};
     boost::regex parser{".*?;"};
     boost::sregex_iterator xIt(candidate.begin(), candidate.end(), parser);
     while (xIt != boost::sregex_iterator{}){
@@ -41,7 +41,7 @@ request_pool TuringInterpreter::Interpret(const std::string &candidate) {
         std::string one_cmd = xIt->str();
         if  (boost::regex_search(one_cmd, what, second_basic_expr)) {
             std::string united_command = what["cmd1"] + what["cmd2"];
-            std::string united_options = what["opt1"] + what["opt2"];
+            std::string united_options = what["opt1"] + " " + what["opt2"];
             key_word->get_request(united_command, temp);
             options->get_request(united_options, temp);
             result.push(temp);
@@ -52,7 +52,7 @@ request_pool TuringInterpreter::Interpret(const std::string &candidate) {
             result.push(temp);
         }
         else
-            throw InterpretException("Check basic construction grammar");
+            throw InterpretException("Check basic construction grammar " + one_cmd);
         ++xIt;
     }
     return result;
@@ -66,7 +66,7 @@ void KeyWord::get_request(const std::string &cmd, TuringRequest &request) {
     else if (cmd == "indo")
         request.type_of_action = request.transition;
     else
-        throw InterpretException("Bad command");
+        throw InterpretException("Bad command: " + cmd);
 }
 
 void Options::get_request(const std::string &opt, TuringRequest &request) {

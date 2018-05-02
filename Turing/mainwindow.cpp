@@ -16,6 +16,7 @@ void MainWindow::on_LoadCmdBtn_clicked()
     Turing::Handler hn(transitions_set(), belt, "", {});
     TuringInterpreter* intr = new TuringInterpreter;
     auto commands = ui->CommandsEdit->toPlainText();
+    try {
     auto cmd = intr->Interpret(commands.toStdString());
     hn.SetCommands(cmd);
     Turing::ResultCode code = Turing::NormalWork;
@@ -26,6 +27,13 @@ void MainWindow::on_LoadCmdBtn_clicked()
     QString temp = QString::fromStdString(hn.GetBeltValues());
     msgBox.setText(temp);
     msgBox.exec();
+    }
+    catch (InterpretException e){
+        QMessageBox msgBox;
+        msgBox.setText(QString::fromStdString( e.what() ) );
+        msgBox.exec();
+    }
+
     delete intr;
 }
 
@@ -69,7 +77,7 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionNew_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,
+    //QString fileName = QFileDialog::getSaveFileName(this,
     // Complete later                                                "Create",                                                     "./");
 }
 

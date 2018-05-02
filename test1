@@ -1,0 +1,11 @@
+in { 1 , q1 } do { 1 , q1 , R };
+in { 0 , q1 } do { 0 , q1 , R };
+in { lambda , q1 } do { lambda , q2 , L };
+in { 1 , q2 } do {0 , q2 , L };
+in { 0 , q2 } do { 1 , q3 , L };
+in { lambda , q2 } do { 1 , qs , C };
+in { 0 , q3 } do { 0 , q3 , L };
+in { 1 , q3 } do { 1 , q3 , L };
+in { lambda , q3 } do { lambda , qs , C };
+set_begin { q1 };
+set_end { qs };
