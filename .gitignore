@@ -2,3 +2,6 @@
 *.pro.user
 .build-Turing-Desktop-Debug/
 build-Turing-Desktop-Debug/
+*.pro.user.*
+build-Turing-Desktop_Qt_5_9_2_GCC_64bit-Debug/
+.build-Turing-Desktop_Qt_5_9_2_GCC_64bit-Debug/
