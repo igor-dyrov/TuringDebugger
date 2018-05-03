@@ -33,7 +33,9 @@ namespace Turing {
         void clear();
         int Begin();
         Belt& operator = (const Belt &);
+        size_t size();
         symbol& operator[](int);
+        const belt_type& getBelt() const;
         friend std::ostream & operator << (std::ostream &, const Belt &);
     };
 
@@ -66,6 +68,7 @@ namespace Turing {
         void clear();
         void SetCommands(request_pool &);
         bool isFirst();
+        const Belt& getBelt() const;
     };
 }
 
