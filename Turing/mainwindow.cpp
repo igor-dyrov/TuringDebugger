@@ -111,6 +111,8 @@ void MainWindow::on_btnOneStep_clicked()
 //    ui->horizontalLayout_3->removeItem(ui->horizontalLayout_3->itemAt(0));
     belt_type map = Debugger.getBelt().getBelt();
     int min_index = get_min_key(map);
+    int cur = Debugger.get_temp_index()-min_index;
+
     for (const auto& obj: map)
     {
         int index = obj.first - min_index;
@@ -118,6 +120,10 @@ void MainWindow::on_btnOneStep_clicked()
         if (index < size){
             QLabel* lbl = dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(index)->widget());
             lbl->setText(QString::fromStdString(obj.second));
+            if (index == cur)
+                lbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
         }
         else {
             QLabel *newlbl = new QLabel;
@@ -128,6 +134,10 @@ void MainWindow::on_btnOneStep_clicked()
             newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
             newlbl->setAlignment(Qt::AlignCenter);
             ui->horizontalLayout_3->insertWidget(index, newlbl);
+            if (index == cur)
+                newlbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
         }
     }
 }
@@ -140,10 +150,41 @@ void MainWindow::on_btnStepBefore_clicked()
     Debugger.StepBefore();
     if ( Debugger.isFirst() )
         ui->btnStepBefore->setEnabled(false);
-    QMessageBox msgBox;
-    QString temp = QString::fromStdString(Debugger.GetBeltValues());
-    msgBox.setText(temp);
-    msgBox.exec();
+//    QMessageBox msgBox;
+//    QString temp = QString::fromStdString(Debugger.GetBeltValues());
+//    msgBox.setText(temp);
+//    msgBox.exec();
+    belt_type map = Debugger.getBelt().getBelt();
+    int min_index = get_min_key(map);
+    int cur = Debugger.get_temp_index()-min_index;
+
+    for (const auto& obj: map)
+    {
+        int index = obj.first - min_index;
+        int size = ui->horizontalLayout_3->count();
+        if (index < size){
+            QLabel* lbl = dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(index)->widget());
+            lbl->setText(QString::fromStdString(obj.second));
+            if (index == cur)
+                lbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        }
+        else {
+            QLabel *newlbl = new QLabel;
+            newlbl->setText( QString::fromStdString(obj.second) );
+            newlbl->setFixedSize(50,50);
+            newlbl->setFrameShape(QFrame::Panel);
+            newlbl->setFrameShadow(QFrame::Raised);
+            newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+            newlbl->setAlignment(Qt::AlignCenter);
+            ui->horizontalLayout_3->insertWidget(index, newlbl);
+            if (index == cur)
+                newlbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        }
+    }
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -162,4 +203,5 @@ void MainWindow::on_pushButton_clicked()
         newlbl->setAlignment(Qt::AlignCenter);
         ui->horizontalLayout_3->insertWidget(obj.first, newlbl);
     }
+    dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : red; color : blue; }");
 }

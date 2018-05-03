@@ -69,6 +69,7 @@ namespace Turing {
         void SetCommands(request_pool &);
         bool isFirst();
         const Belt& getBelt() const;
+        const int get_temp_index() const;
     };
 }
 

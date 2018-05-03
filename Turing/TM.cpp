@@ -207,3 +207,8 @@ const Turing::Belt& Turing::Handler::getBelt() const
     return belt;
 }
 
+const int Turing::Handler::get_temp_index() const
+{
+    return temp_index;
+}
+
