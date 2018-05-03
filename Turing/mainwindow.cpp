@@ -11,6 +11,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     ui->btnStepBefore->setEnabled(false);
+    QLabel *newlbl = new QLabel;
+    newlbl->setText("Asdfvsd");
+   // ui->horizontalLayout_3->addWidget(newlbl,1000);
+    ui->horizontalLayout_3->insertWidget(0, newlbl);
+    QLayoutItem* item = ui->horizontalLayout_3->itemAt(1);
+    QWidget* wd = item->widget();
+    //ui->horizontalLayout_3->removeWidget(wd);
+    //ui->horizontalLayout_3->removeItem(item);
+    QLabel* tmp = dynamic_cast<QLabel*>(wd);
+    tmp->setText("Aloha");
+    //tmp->setText("It Work");
     //connect(Ui::MainWindow::LoadCmdBtn, SIGNAL (released()), this, SLOT (on_LoadCmdBtn_clicked()));
 }
 
