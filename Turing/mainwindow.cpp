@@ -95,6 +95,12 @@ void MainWindow::on_actionNew_triggered()
 
 MainWindow::~MainWindow()
 {
+    QLayoutItem *item;
+    while((item = ui->horizontalLayout_3->takeAt(0)) != nullptr){
+        delete item->widget();
+        delete item;
+    }
+    delete ui->horizontalLayout_3;
     delete ui;
 }
 
@@ -126,7 +132,8 @@ void MainWindow::on_btnOneStep_clicked()
                 lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
         }
         else {
-            QLabel *newlbl = new QLabel;
+            QWidget *parent = dynamic_cast<QLabel*>(ui->horizontalLayout_3);
+            QLabel *newlbl = new QLabel(parent);
             newlbl->setText( QString::fromStdString(obj.second) );
             newlbl->setFixedSize(50,50);
             newlbl->setFrameShape(QFrame::Panel);
@@ -134,6 +141,7 @@ void MainWindow::on_btnOneStep_clicked()
             newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
             newlbl->setAlignment(Qt::AlignCenter);
             ui->horizontalLayout_3->insertWidget(index, newlbl);
+
             if (index == cur)
                 newlbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
             else
@@ -171,7 +179,8 @@ void MainWindow::on_btnStepBefore_clicked()
                 lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
         }
         else {
-            QLabel *newlbl = new QLabel;
+            QWidget *parent = dynamic_cast<QLabel*>(ui->horizontalLayout_3);
+            QLabel *newlbl = new QLabel(parent);
             newlbl->setText( QString::fromStdString(obj.second) );
             newlbl->setFixedSize(50,50);
             newlbl->setFrameShape(QFrame::Panel);
@@ -194,7 +203,8 @@ void MainWindow::on_pushButton_clicked()
     const belt_type map = Debugger.getBelt().getBelt();
     for (auto const& obj : map)
     {
-        QLabel *newlbl = new QLabel;
+        QWidget *parent = dynamic_cast<QLabel*>(ui->horizontalLayout_3);
+        QLabel *newlbl = new QLabel(parent);
         newlbl->setText( QString::fromStdString(obj.second) );
         newlbl->setFixedSize(50,50);
         newlbl->setFrameShape(QFrame::Panel);
