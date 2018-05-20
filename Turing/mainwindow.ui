@@ -56,14 +56,14 @@
    <widget class="QLabel" name="BeltLabel">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>20</y>
-      <width>201</width>
+      <x>150</x>
+      <y>50</y>
+      <width>161</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Belt</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnOneStep">
@@ -123,20 +123,33 @@
      </rect>
     </property>
     <property name="text">
-     <string>Ok</string>
+     <string>Set Belt</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="StartDebugBtn">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>390</y>
-      <width>79</width>
-      <height>19</height>
+      <x>450</x>
+      <y>320</y>
+      <width>137</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Start</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="PauseDebugBtn">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>320</y>
+      <width>137</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pause</string>
     </property>
    </widget>
   </widget>
@@ -146,7 +159,7 @@
      <x>0</x>
      <y>0</y>
      <width>835</width>
-     <height>27</height>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

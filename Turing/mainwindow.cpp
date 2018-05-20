@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    m_state = Turing::NormalWork;
     ui->setupUi(this);
     ui->btnStepBefore->setEnabled(false);
 //    QLabel *newlbl = new QLabel;
@@ -96,11 +97,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_btnOneStep_clicked()
+Turing::ResultCode MainWindow::on_btnOneStep_clicked()
 {
     ui->btnStepBefore->setEnabled(true);
     Turing::Handler& Debugger = Turing::Handler::instance();
-    Debugger.OneStep();
+    Turing::ResultCode code = Debugger.OneStep();
 //    QMessageBox msgBox;
 //    QString temp = QString::fromStdString(Debugger.GetBeltValues());
 //    msgBox.setText(temp);
@@ -138,11 +139,12 @@ void MainWindow::on_btnOneStep_clicked()
                 newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
         }
     }
+    return code;
 }
 
 void MainWindow::on_btnStepBefore_clicked()
 {
-
+    m_state = Turing::EndOfProgram;
     Turing::Handler& Debugger = Turing::Handler::instance();
 
     Debugger.StepBefore();
@@ -217,4 +219,27 @@ void MainWindow::on_pushButton_clicked()
         ui->horizontalLayout_3->insertWidget(obj.first, newlbl);
     }
     dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : red; color : blue; }");
+}
+
+void delay()
+{
+    QTime dieTime= QTime::currentTime().addSecs(1);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
+
+void MainWindow::on_StartDebugBtn_clicked()
+{
+    m_state = Turing::NormalWork;
+    Turing::ResultCode code = Turing::NormalWork;
+    while (code == Turing::NormalWork && m_state) {
+            code = on_btnOneStep_clicked();
+            delay();
+    }
+
+}
+
+void MainWindow::on_PauseDebugBtn_clicked()
+{
+    m_state = Turing::EndOfProgram;
 }
