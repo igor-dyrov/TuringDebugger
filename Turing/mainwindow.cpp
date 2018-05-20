@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::on_LoadCmdBtn_clicked()
 {
     Turing::Handler& Debugger = Turing::Handler::instance();
-    belt_type b = {{0,"1"}, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
+    belt_type b = {{0,"1"}};//, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
     Turing::Belt belt(b);
 //    Turing::Handler hn(transitions_set(), belt, "", {});
     Debugger.setFields(transitions_set(), belt, "", {});
