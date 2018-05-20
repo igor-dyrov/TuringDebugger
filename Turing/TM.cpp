@@ -1,6 +1,7 @@
 #include "TM.hpp"
 #include "Lang.hpp"
 
+
 int get_min_key(belt_type &belt) {
     if (belt.empty())
         return 0;
@@ -62,8 +63,19 @@ namespace Turing {
     }
 }
 
-Turing::Handler::Handler(const transitions_set &dict, const Belt &new_belt,
-                         const state &beg, const std::vector<state> &end) {
+//Turing::Handler::Handler(const transitions_set &dict, const Belt &new_belt,
+//                         const state &beg, const std::vector<state> &end) {
+//    transitions = dict;
+//    belt = new_belt;
+//    beg_state = beg;
+//    temp_state = beg_state;
+//    end_states = end;
+//    temp_index = belt.Begin();
+//}
+
+void Turing::Handler::setFields(const transitions_set &dict, const Belt &new_belt,
+               const state &beg, const std::vector<state> &end)
+{
     transitions = dict;
     belt = new_belt;
     beg_state = beg;
@@ -78,6 +90,12 @@ std::string Turing::Handler::GetBeltValues() {
     return str.str();
 }
 
+Turing::Handler &Turing::Handler::instance()
+{
+    static Turing::Handler object;
+    return object;
+}
+
 Turing::ResultCode Turing::Handler::OneStep() {
     if (std::find(end_states.begin(), end_states.end(),temp_state) == end_states.end()) {
         Situation temp;
@@ -85,7 +103,17 @@ Turing::ResultCode Turing::Handler::OneStep() {
         temp._symbol = belt[temp_index];
         Command to_do = transitions[temp];
         if (to_do.new_state == "" || to_do.new_symbol == "")
+        {
             return NoSuitableCommand;
+        }
+        else
+        {
+            change current;
+            current.temp_index = temp_index;
+            current.temp_state = temp_state;
+            current.s = belt[temp_index];
+            history.push(current);
+        }
         belt[temp_index] = to_do.new_symbol;
         if (to_do.move == Command::Right)
             ++temp_index;
@@ -98,6 +126,23 @@ Turing::ResultCode Turing::Handler::OneStep() {
             return ResultCode::EndOfProgram;
     }
     else return ResultCode::EndOfProgram;
+}
+
+Turing::ResultCode Turing::Handler::StepBefore()
+{
+    if ( history.empty() )
+    {
+        return ResultCode::EndOfProgram;
+    }
+    else
+    {
+        change last = history.top();
+        temp_index = last.temp_index;
+        temp_state = last.temp_state;
+        belt[temp_index] = last.s;
+        history.pop();
+        return ResultCode::NormalWork;
+    }
 }
 
 void Turing::Handler::clear() {
@@ -124,7 +169,14 @@ void Turing::Handler::SetCommands(request_pool &pool) {
         }
         else if(request.type_of_action == TuringRequest::transition) {
         	if (request.params.size() < 5)
-        		throw InterpretException("bad options");
+            {
+                std::string er ="";
+                for (auto& obj : request.params ){
+                    er += obj;
+                    er += " ";
+                }
+                throw InterpretException("bad options: " + er);
+            }
             Turing::Command cmd;
             if (request.params[4] == "L")
                 cmd.move = Turing::Command::Left;
@@ -138,5 +190,10 @@ void Turing::Handler::SetCommands(request_pool &pool) {
             pool.pop();
         }
     }
+}
+
+bool Turing::Handler::isFirst()
+{
+    return history.empty();
 }
 

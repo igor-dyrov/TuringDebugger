@@ -1,3 +1,6 @@
+#ifndef __LANG__
+#define __LANG__
+
 #include "settings.hpp"
 
 class KeyWord;
@@ -44,3 +47,5 @@ public:
 protected:
     void get_request(const std::string &, TuringRequest &);
 };
+
+#endif
