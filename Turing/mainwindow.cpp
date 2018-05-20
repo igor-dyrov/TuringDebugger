@@ -102,12 +102,6 @@ Turing::ResultCode MainWindow::on_btnOneStep_clicked()
     ui->btnStepBefore->setEnabled(true);
     Turing::Handler& Debugger = Turing::Handler::instance();
     Turing::ResultCode code = Debugger.OneStep();
-//    QMessageBox msgBox;
-//    QString temp = QString::fromStdString(Debugger.GetBeltValues());
-//    msgBox.setText(temp);
-//    msgBox.exec();
-//    ui->horizontalLayout_3->removeWidget(ui->horizontalLayout_3->itemAt(0)->widget());
-//    ui->horizontalLayout_3->removeItem(ui->horizontalLayout_3->itemAt(0));
     belt_type map = Debugger.getBelt().getBelt();
     int min_index = get_min_key(map);
     int cur = Debugger.get_temp_index()-min_index;
@@ -205,6 +199,12 @@ void MainWindow::on_pushButton_clicked()
     }
 
     delete intr;
+
+    QLayoutItem *item;
+    while((item = ui->horizontalLayout_3->takeAt(0)) != nullptr){
+        delete item->widget();
+        delete item;
+    }
 
     const belt_type map = Debugger.getBelt().getBelt();
     for (auto const& obj : map)
