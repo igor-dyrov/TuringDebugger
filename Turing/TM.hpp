@@ -31,12 +31,27 @@ namespace Turing {
         Belt();
         Belt(const belt_type&);
         void clear();
-        int Begin();
+        int Begin() const;
         Belt& operator = (const Belt &);
-        size_t size();
+        size_t size() const;
         symbol& operator[](int);
         const belt_type& getBelt() const;
         friend std::ostream & operator << (std::ostream &, const Belt &);
+        struct Iterator {
+        private:
+            belt_type *cont;
+            std::map<int, symbol>::iterator itr;
+        public:
+            Iterator() = default;
+            Iterator(const Iterator&);
+            Iterator& operator = (const Iterator&);
+            symbol& operator* ();
+            Iterator& operator ++ ();
+            Iterator& operator -- ();
+            bool operator == (const Iterator&);
+            bool operator != (const Iterator&);
+            ~Iterator() = default;
+        };
     };
 
 
@@ -64,10 +79,10 @@ namespace Turing {
         void setFields(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
         ResultCode OneStep();
         ResultCode StepBefore();
-        std::string GetBeltValues();
+        std::string GetBeltValues() const;
         void clear();
         void SetCommands(request_pool &);
-        bool isFirst();
+        bool isFirst() const;
         const Belt& getBelt() const;
         const int get_temp_index() const;
     };

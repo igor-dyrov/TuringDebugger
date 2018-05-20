@@ -38,7 +38,7 @@ Turing::Belt& Turing::Belt::operator=(const Turing::Belt & obj) {
     return *this;
 }
 
-int Turing::Belt::Begin() { return beg_index; }
+int Turing::Belt::Begin() const { return beg_index; }
 
 void Turing::Belt::clear() {
     internal_belt.clear();
@@ -59,6 +59,42 @@ const belt_type &Turing::Belt::getBelt() const
     return internal_belt;
 }
 
+
+
+
+Turing::Belt::Iterator::Iterator(const Turing::Belt::Iterator& other) {
+    cont = other.cont;
+    itr = other.itr;
+}
+
+Turing::Belt::Iterator& Turing::Belt::Iterator::operator =(const Turing::Belt::Iterator& other){
+    cont = other.cont;
+    itr = other.itr;
+    return *this;
+}
+
+Turing::Belt::Iterator& Turing::Belt::Iterator::operator ++() {
+    itr++;
+    return *this;
+}
+
+Turing::Belt::Iterator& Turing::Belt::Iterator::operator --() {
+    itr--;
+    return *this;
+}
+
+symbol& Turing::Belt::Iterator::operator *() {
+    return itr->second;
+}
+
+bool Turing::Belt::Iterator::operator ==(const Turing::Belt::Iterator& other) {
+    return (itr == other.itr && cont == other.cont);
+}
+
+bool Turing::Belt::Iterator::operator !=(const Turing::Belt::Iterator& other) {
+    return !(*this == other);
+}
+
 namespace Turing {
     std::ostream &operator << (std::ostream &os, const Turing::Belt &obj) {
         for (auto const &i : obj.internal_belt)
@@ -67,6 +103,9 @@ namespace Turing {
         return os;
     }
 }
+
+
+
 
 //Turing::Handler::Handler(const transitions_set &dict, const Belt &new_belt,
 //                         const state &beg, const std::vector<state> &end) {
@@ -89,7 +128,7 @@ void Turing::Handler::setFields(const transitions_set &dict, const Belt &new_bel
     temp_index = belt.Begin();
 }
 
-std::string Turing::Handler::GetBeltValues() {
+std::string Turing::Handler::GetBeltValues() const {
     std::stringstream str;
     str << belt;
     return str.str();
@@ -197,7 +236,7 @@ void Turing::Handler::SetCommands(request_pool &pool) {
     }
 }
 
-bool Turing::Handler::isFirst()
+bool Turing::Handler::isFirst() const
 {
     return history.empty();
 }
