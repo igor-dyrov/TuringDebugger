@@ -25,6 +25,7 @@ public:
     TuringInterpreter();
     TuringInterpreter(int){has_ptrs = false;};
     request_pool Interpret(const std::string &);
+    belt_type BeltParser(const std::string &);
     virtual ~TuringInterpreter();
 protected:
     virtual void get_request(const std::string &, TuringRequest &){}

@@ -26,6 +26,11 @@ TuringInterpreter::~TuringInterpreter() {
     has_ptrs = false;
 }
 
+belt_type TuringInterpreter::BeltParser(const std::string &candidate) {
+    belt_type res = {{0,"1"}, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
+    return res;
+}
+
 request_pool TuringInterpreter::Interpret(const std::string &candidate) {
     request_pool result;
     boost::regex first_basic_expr{ "(?<command>(\\w+))(\\s)*{(?<options>((\\s)*(\\w)+,*(\\s)*)*)}" };

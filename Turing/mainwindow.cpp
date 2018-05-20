@@ -22,10 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::on_LoadCmdBtn_clicked()
 {
     Turing::Handler& Debugger = Turing::Handler::instance();
-    belt_type b = {{0,"1"}};//, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
-    Turing::Belt belt(b);
+    Debugger.setFields(transitions_set(), Turing::Belt(), "", {});
 //    Turing::Handler hn(transitions_set(), belt, "", {});
-    Debugger.setFields(transitions_set(), belt, "", {});
     TuringInterpreter* intr = new TuringInterpreter;
     auto commands = ui->CommandsEdit->toPlainText();
     try {
@@ -190,6 +188,21 @@ void MainWindow::on_btnStepBefore_clicked()
 void MainWindow::on_pushButton_clicked()
 {
     Turing::Handler& Debugger = Turing::Handler::instance();
+
+    TuringInterpreter* intr = new TuringInterpreter;
+    auto commands = ui->lineEdit->text();
+    try {
+    belt_type new_belt = intr->BeltParser(commands.toStdString());
+    Turing::Belt belt(new_belt);
+    Debugger.setBelt(belt);
+    }
+    catch (InterpretException e){
+        QMessageBox msgBox;
+        msgBox.setText(QString::fromStdString( e.what() ) );
+        msgBox.exec();
+    }
+
+    delete intr;
 
     const belt_type map = Debugger.getBelt().getBelt();
     for (auto const& obj : map)
