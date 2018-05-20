@@ -183,6 +183,7 @@ void MainWindow::on_btnStepBefore_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
+    m_state = Turing::EndOfProgram;
     Turing::Handler& Debugger = Turing::Handler::instance();
 
     TuringInterpreter* intr = new TuringInterpreter;
@@ -190,6 +191,7 @@ void MainWindow::on_pushButton_clicked()
     try {
     belt_type new_belt = intr->BeltParser(commands.toStdString());
     Turing::Belt belt(new_belt);
+    on_LoadCmdBtn_clicked();
     Debugger.setBelt(belt);
     }
     catch (InterpretException e){
