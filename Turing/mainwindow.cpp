@@ -8,16 +8,21 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
     ui->btnStepBefore->setEnabled(false);
-    //connect(Ui::MainWindow::LoadCmdBtn, SIGNAL (released()), this, SLOT (on_LoadCmdBtn_clicked()));
+//    QLabel *newlbl = new QLabel;
+//    newlbl->setText("Asdfvsd");
+//    ui->horizontalLayout_3->insertWidget(0, newlbl);
+//    QLayoutItem* item = ui->horizontalLayout_3->itemAt(1);
+//    QWidget* wd = item->widget();
+//    QLabel* tmp = dynamic_cast<QLabel*>(wd);
+//    tmp->setText("Aloha");
 }
 
 void MainWindow::on_LoadCmdBtn_clicked()
 {
     Turing::Handler& Debugger = Turing::Handler::instance();
-    belt_type b = {{0,"1"}, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
+    belt_type b = {{0,"1"}};//, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
     Turing::Belt belt(b);
 //    Turing::Handler hn(transitions_set(), belt, "", {});
     Debugger.setFields(transitions_set(), belt, "", {});
@@ -98,11 +103,43 @@ void MainWindow::on_btnOneStep_clicked()
     ui->btnStepBefore->setEnabled(true);
     Turing::Handler& Debugger = Turing::Handler::instance();
     Debugger.OneStep();
-    QMessageBox msgBox;
-    QString temp = QString::fromStdString(Debugger.GetBeltValues());
-    msgBox.setText(temp);
-    msgBox.exec();
+//    QMessageBox msgBox;
+//    QString temp = QString::fromStdString(Debugger.GetBeltValues());
+//    msgBox.setText(temp);
+//    msgBox.exec();
+//    ui->horizontalLayout_3->removeWidget(ui->horizontalLayout_3->itemAt(0)->widget());
+//    ui->horizontalLayout_3->removeItem(ui->horizontalLayout_3->itemAt(0));
+    belt_type map = Debugger.getBelt().getBelt();
+    int min_index = get_min_key(map);
+    int cur = Debugger.get_temp_index()-min_index;
 
+    for (const auto& obj: map)
+    {
+        int index = obj.first - min_index;
+        int size = ui->horizontalLayout_3->count();
+        if (index < size){
+            QLabel* lbl = dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(index)->widget());
+            lbl->setText(QString::fromStdString(obj.second));
+            if (index == cur)
+                lbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        }
+        else {
+            QLabel *newlbl = new QLabel;
+            newlbl->setText( QString::fromStdString(obj.second) );
+            newlbl->setFixedSize(50,50);
+            newlbl->setFrameShape(QFrame::Panel);
+            newlbl->setFrameShadow(QFrame::Raised);
+            newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+            newlbl->setAlignment(Qt::AlignCenter);
+            ui->horizontalLayout_3->insertWidget(index, newlbl);
+            if (index == cur)
+                newlbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        }
+    }
 }
 
 void MainWindow::on_btnStepBefore_clicked()
@@ -113,8 +150,58 @@ void MainWindow::on_btnStepBefore_clicked()
     Debugger.StepBefore();
     if ( Debugger.isFirst() )
         ui->btnStepBefore->setEnabled(false);
-    QMessageBox msgBox;
-    QString temp = QString::fromStdString(Debugger.GetBeltValues());
-    msgBox.setText(temp);
-    msgBox.exec();
+//    QMessageBox msgBox;
+//    QString temp = QString::fromStdString(Debugger.GetBeltValues());
+//    msgBox.setText(temp);
+//    msgBox.exec();
+    belt_type map = Debugger.getBelt().getBelt();
+    int min_index = get_min_key(map);
+    int cur = Debugger.get_temp_index()-min_index;
+
+    for (const auto& obj: map)
+    {
+        int index = obj.first - min_index;
+        int size = ui->horizontalLayout_3->count();
+        if (index < size){
+            QLabel* lbl = dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(index)->widget());
+            lbl->setText(QString::fromStdString(obj.second));
+            if (index == cur)
+                lbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        }
+        else {
+            QLabel *newlbl = new QLabel;
+            newlbl->setText( QString::fromStdString(obj.second) );
+            newlbl->setFixedSize(50,50);
+            newlbl->setFrameShape(QFrame::Panel);
+            newlbl->setFrameShadow(QFrame::Raised);
+            newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+            newlbl->setAlignment(Qt::AlignCenter);
+            ui->horizontalLayout_3->insertWidget(index, newlbl);
+            if (index == cur)
+                newlbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+            else
+                newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        }
+    }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    Turing::Handler& Debugger = Turing::Handler::instance();
+
+    const belt_type map = Debugger.getBelt().getBelt();
+    for (auto const& obj : map)
+    {
+        QLabel *newlbl = new QLabel;
+        newlbl->setText( QString::fromStdString(obj.second) );
+        newlbl->setFixedSize(50,50);
+        newlbl->setFrameShape(QFrame::Panel);
+        newlbl->setFrameShadow(QFrame::Raised);
+        newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        newlbl->setAlignment(Qt::AlignCenter);
+        ui->horizontalLayout_3->insertWidget(obj.first, newlbl);
+    }
+    dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : red; color : blue; }");
 }

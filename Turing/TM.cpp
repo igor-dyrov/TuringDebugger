@@ -54,6 +54,11 @@ symbol& Turing::Belt::operator[](int index) {
     return internal_belt[index];
 }
 
+const belt_type &Turing::Belt::getBelt() const
+{
+    return internal_belt;
+}
+
 namespace Turing {
     std::ostream &operator << (std::ostream &os, const Turing::Belt &obj) {
         for (auto const &i : obj.internal_belt)
@@ -195,5 +200,15 @@ void Turing::Handler::SetCommands(request_pool &pool) {
 bool Turing::Handler::isFirst()
 {
     return history.empty();
+}
+
+const Turing::Belt& Turing::Handler::getBelt() const
+{
+    return belt;
+}
+
+const int Turing::Handler::get_temp_index() const
+{
+    return temp_index;
 }
 
