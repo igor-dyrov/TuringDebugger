@@ -139,15 +139,19 @@ namespace Turing {
 //    temp_index = belt.Begin();
 //}
 
+void Turing::Handler::setBelt(const Belt &new_belt)
+{
+    belt = new_belt;
+    temp_index = belt.Begin();
+}
+
 void Turing::Handler::setFields(const transitions_set &dict, const Belt &new_belt,
                const state &beg, const std::vector<state> &end)
 {
     transitions = dict;
-    belt = new_belt;
     beg_state = beg;
     temp_state = beg_state;
     end_states = end;
-    temp_index = belt.Begin();
 }
 
 std::string Turing::Handler::GetBeltValues() const {
