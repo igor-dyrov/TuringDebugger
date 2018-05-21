@@ -45,13 +45,17 @@ namespace Turing {
             Iterator() = default;
             Iterator(const Iterator&);
             Iterator& operator = (const Iterator&);
-            symbol& operator* ();
             Iterator& operator ++ ();
             Iterator& operator -- ();
             bool operator == (const Iterator&);
             bool operator != (const Iterator&);
             ~Iterator() = default;
+            friend class Belt;
+            int first;
+            symbol second;
         };
+        Iterator begin();
+        Iterator end();
     };
 
 

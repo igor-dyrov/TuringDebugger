@@ -32,6 +32,24 @@ Turing::Belt::Belt(const belt_type &belt) {
     beg_index = get_min_key(internal_belt);
 }
 
+Turing::Belt::Iterator Turing::Belt::begin() {
+    Turing::Belt::Iterator iter;
+    iter.itr = internal_belt.begin();
+    iter.cont = &internal_belt;
+    iter.first = iter.itr->first;
+    iter.second = iter.itr->second;
+    return iter;
+}
+
+Turing::Belt::Iterator Turing::Belt::end() {
+    Turing::Belt::Iterator iter;
+    iter.itr = internal_belt.end();
+    iter.cont = &internal_belt;
+    iter.first = iter.itr->first;
+    iter.second = iter.itr->second;
+    return iter;
+}
+
 Turing::Belt& Turing::Belt::operator=(const Turing::Belt & obj) {
     internal_belt = obj.internal_belt;
     beg_index = obj.beg_index;
@@ -65,26 +83,30 @@ const belt_type &Turing::Belt::getBelt() const
 Turing::Belt::Iterator::Iterator(const Turing::Belt::Iterator& other) {
     cont = other.cont;
     itr = other.itr;
+    first = other.first;
+    second = other.second;
 }
 
 Turing::Belt::Iterator& Turing::Belt::Iterator::operator =(const Turing::Belt::Iterator& other){
     cont = other.cont;
     itr = other.itr;
+    first = other.first;
+    second = other.second;
     return *this;
 }
 
 Turing::Belt::Iterator& Turing::Belt::Iterator::operator ++() {
     itr++;
+    first = itr->first;
+    second = itr->second;
     return *this;
 }
 
 Turing::Belt::Iterator& Turing::Belt::Iterator::operator --() {
     itr--;
+    first = itr->first;
+    second = itr->second;
     return *this;
-}
-
-symbol& Turing::Belt::Iterator::operator *() {
-    return itr->second;
 }
 
 bool Turing::Belt::Iterator::operator ==(const Turing::Belt::Iterator& other) {
