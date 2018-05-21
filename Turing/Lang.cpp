@@ -27,7 +27,18 @@ TuringInterpreter::~TuringInterpreter() {
 }
 
 belt_type TuringInterpreter::BeltParser(const std::string &candidate) {
-    belt_type res = {{0,"1"}, {1, "1"}, {2, "1"}, {3, "1"}, {4, "1"}};
+    belt_type res;
+    std::string delimiter = " ";
+    size_t next;
+    size_t prev = 0;
+    size_t iter = 0;
+    while( ( next = candidate.find( delimiter, prev ) ) != std::string::npos ){
+        std::string tmp = candidate.substr(prev, next - prev);
+        res.insert({iter, tmp});
+        prev = next + 1;
+        ++iter;
+    }
+    res.insert({iter, candidate.substr(prev) });
     return res;
 }
 

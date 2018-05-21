@@ -223,8 +223,8 @@ void MainWindow::on_pushButton_clicked()
     }
     ui->horizontalLayout_3->addStretch();
 
-    const belt_type map = Debugger.getBelt().getBelt();
-    for (auto const& obj : map)
+    auto map = Debugger.getBelt();
+    for (auto obj = map.begin(); obj != obj.end(); ++obj)
     {
         QLabel *newlbl = new QLabel;
         newlbl->setText( QString::fromStdString(obj.second) );
