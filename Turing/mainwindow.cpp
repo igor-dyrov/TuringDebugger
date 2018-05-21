@@ -11,6 +11,20 @@ MainWindow::MainWindow(QWidget *parent) :
     m_state = Turing::NormalWork;
     ui->setupUi(this);
     ui->btnStepBefore->setEnabled(false);
+    QPixmap img(":/img/Mashina_Tjuringa-2.jpg");
+    ui->label->setPixmap(img);
+    this->setStyleSheet("background-color: white;");
+    //ui->btnOneStep->setStyleSheet("background-color: blue;");
+//    for (int i = 0; i < 15; ++i){
+//        QLabel *newlbl = new QLabel;
+//        newlbl->setText( QString::fromStdString("λ") );
+//        newlbl->setFixedSize(50,50);
+//        newlbl->setFrameShape(QFrame::Panel);
+//        newlbl->setFrameShadow(QFrame::Raised);
+//        newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
+//        newlbl->setAlignment(Qt::AlignCenter);
+//        ui->horizontalLayout_3->insertWidget(i, newlbl);
+//    }
 //    QLabel *newlbl = new QLabel;
 //    newlbl->setText("Asdfvsd");
 //    ui->horizontalLayout_3->insertWidget(0, newlbl);
@@ -110,13 +124,13 @@ Turing::ResultCode MainWindow::on_btnOneStep_clicked()
     {
         int index = obj.first - min_index;
         int size = ui->horizontalLayout_3->count();
-        if (index < size){
+        if (index < size-1){
             QLabel* lbl = dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(index)->widget());
             lbl->setText(QString::fromStdString(obj.second));
             if (index == cur)
-                lbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+                lbl->setStyleSheet("QLabel { background-color : blue; color : white; }");
             else
-                lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+                lbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         }
         else {
             QLabel *newlbl = new QLabel;
@@ -124,13 +138,13 @@ Turing::ResultCode MainWindow::on_btnOneStep_clicked()
             newlbl->setFixedSize(50,50);
             newlbl->setFrameShape(QFrame::Panel);
             newlbl->setFrameShadow(QFrame::Raised);
-            newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+            newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
             newlbl->setAlignment(Qt::AlignCenter);
             ui->horizontalLayout_3->insertWidget(index, newlbl);
             if (index == cur)
-                newlbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+                newlbl->setStyleSheet("QLabel { background-color : blue; color : white; }");
             else
-                newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+                newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         }
     }
     return code;
@@ -160,9 +174,9 @@ void MainWindow::on_btnStepBefore_clicked()
             QLabel* lbl = dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(index)->widget());
             lbl->setText(QString::fromStdString(obj.second));
             if (index == cur)
-                lbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+                lbl->setStyleSheet("QLabel { background-color : blue; color : white; }");
             else
-                lbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+                lbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         }
         else {
             QLabel *newlbl = new QLabel;
@@ -170,13 +184,13 @@ void MainWindow::on_btnStepBefore_clicked()
             newlbl->setFixedSize(50,50);
             newlbl->setFrameShape(QFrame::Panel);
             newlbl->setFrameShadow(QFrame::Raised);
-            newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+            newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
             newlbl->setAlignment(Qt::AlignCenter);
             ui->horizontalLayout_3->insertWidget(index, newlbl);
             if (index == cur)
-                newlbl->setStyleSheet("QLabel { background-color : red; color : blue; }");
+                newlbl->setStyleSheet("QLabel { background-color : blue; color : white; }");
             else
-                newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+                newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         }
     }
 }
@@ -207,6 +221,7 @@ void MainWindow::on_pushButton_clicked()
         delete item->widget();
         delete item;
     }
+    ui->horizontalLayout_3->addStretch();
 
     const belt_type map = Debugger.getBelt().getBelt();
     for (auto const& obj : map)
@@ -216,11 +231,11 @@ void MainWindow::on_pushButton_clicked()
         newlbl->setFixedSize(50,50);
         newlbl->setFrameShape(QFrame::Panel);
         newlbl->setFrameShadow(QFrame::Raised);
-        newlbl->setStyleSheet("QLabel { background-color : white; color : blue; }");
+        newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         newlbl->setAlignment(Qt::AlignCenter);
         ui->horizontalLayout_3->insertWidget(obj.first, newlbl);
     }
-    dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : red; color : blue; }");
+    dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : blue; color : white; }");
 }
 
 void delay()

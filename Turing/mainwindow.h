@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QTimer>
 #include <QTime>
+#include <QLabel>
 #include "settings.hpp"
 #include "TM.hpp"
 #include "Lang.hpp"
