@@ -24,7 +24,7 @@ namespace Turing {
 namespace Turing {
     class Belt {
     private:
-        const symbol lambda = "lambda";
+        const symbol lambda = "e";
         belt_type internal_belt;
         int beg_index;
     public:
