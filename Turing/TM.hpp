@@ -51,8 +51,8 @@ namespace Turing {
             bool operator != (const Iterator&);
             ~Iterator() = default;
             friend class Belt;
-            int first;
-            symbol second;
+            int first();
+            symbol second();
         };
         Iterator begin();
         Iterator end();
