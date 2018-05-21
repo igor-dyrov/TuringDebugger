@@ -224,16 +224,16 @@ void MainWindow::on_pushButton_clicked()
     ui->horizontalLayout_3->addStretch();
 
     auto map = Debugger.getBelt();
-    for (auto obj = map.begin(); obj != obj.end(); ++obj)
+    for (auto obj = map.begin(); obj != map.end(); ++obj)
     {
         QLabel *newlbl = new QLabel;
-        newlbl->setText( QString::fromStdString(obj.second) );
+        newlbl->setText( QString::fromStdString(obj.second()) );
         newlbl->setFixedSize(50,50);
         newlbl->setFrameShape(QFrame::Panel);
         newlbl->setFrameShadow(QFrame::Raised);
         newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         newlbl->setAlignment(Qt::AlignCenter);
-        ui->horizontalLayout_3->insertWidget(obj.first, newlbl);
+        ui->horizontalLayout_3->insertWidget(obj.first(), newlbl);
     }
     dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : blue; color : white; }");
 }
