@@ -2,8 +2,6 @@
 #include "ui_mainwindow.h"
 #include "TM.hpp"
 
-//static Turing::Handler& Debugger = Turing::Handler::instance();
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -14,44 +12,17 @@ MainWindow::MainWindow(QWidget *parent) :
     QPixmap img(":/img/Mashina_Tjuringa-2.jpg");
     ui->label->setPixmap(img);
     this->setStyleSheet("background-color: white;");
-    //ui->btnOneStep->setStyleSheet("background-color: blue;");
-//    for (int i = 0; i < 15; ++i){
-//        QLabel *newlbl = new QLabel;
-//        newlbl->setText( QString::fromStdString("λ") );
-//        newlbl->setFixedSize(50,50);
-//        newlbl->setFrameShape(QFrame::Panel);
-//        newlbl->setFrameShadow(QFrame::Raised);
-//        newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
-//        newlbl->setAlignment(Qt::AlignCenter);
-//        ui->horizontalLayout_3->insertWidget(i, newlbl);
-//    }
-//    QLabel *newlbl = new QLabel;
-//    newlbl->setText("Asdfvsd");
-//    ui->horizontalLayout_3->insertWidget(0, newlbl);
-//    QLayoutItem* item = ui->horizontalLayout_3->itemAt(1);
-//    QWidget* wd = item->widget();
-//    QLabel* tmp = dynamic_cast<QLabel*>(wd);
-//    tmp->setText("Aloha");
 }
 
 void MainWindow::on_LoadCmdBtn_clicked()
 {
     Turing::Handler& Debugger = Turing::Handler::instance();
     Debugger.setFields(transitions_set(), Turing::Belt(), "", {});
-//    Turing::Handler hn(transitions_set(), belt, "", {});
     TuringInterpreter* intr = new TuringInterpreter;
     auto commands = ui->CommandsEdit->toPlainText();
     try {
     auto cmd = intr->Interpret(commands.toStdString());
     Debugger.SetCommands(cmd);
-//    Turing::ResultCode code = Turing::NormalWork;
-//    while (code == Turing::NormalWork) {
-//        code = Debugger.OneStep();
-//    }
-//    QMessageBox msgBox;
-//    QString temp = QString::fromStdString(Debugger.GetBeltValues());
-//    msgBox.setText(temp);
-//    msgBox.exec();
     }
     catch (InterpretException e){
         QMessageBox msgBox;
@@ -147,6 +118,27 @@ Turing::ResultCode MainWindow::on_btnOneStep_clicked()
                 newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         }
     }
+    QString str;
+    str = QString::fromStdString(Debugger.get_temp_state());
+    ui->label_state->setText(str);
+    std::string step;
+    Turing::Command cmd = Debugger.get_next_step();
+    if (cmd.new_state == "") {
+        step = "No suitable transition";
+    }
+    else {
+        step += cmd.new_state;
+        step += " ; ";
+        step += cmd.new_symbol;
+        if (cmd.move == Turing::Command::Right)
+            step += " ; Right";
+        else if (cmd.move == Turing::Command::Left)
+            step += " ; Left";
+        else
+            step += " ; Center";
+    }
+    QString str2 = QString::fromStdString(step);
+    ui->label_step->setText(str2);
     return code;
 }
 
@@ -158,10 +150,6 @@ void MainWindow::on_btnStepBefore_clicked()
     Debugger.StepBefore();
     if ( Debugger.isFirst() )
         ui->btnStepBefore->setEnabled(false);
-//    QMessageBox msgBox;
-//    QString temp = QString::fromStdString(Debugger.GetBeltValues());
-//    msgBox.setText(temp);
-//    msgBox.exec();
     belt_type map = Debugger.getBelt().getBelt();
     int min_index = get_min_key(map);
     int cur = Debugger.get_temp_index()-min_index;
@@ -192,6 +180,26 @@ void MainWindow::on_btnStepBefore_clicked()
             else
                 newlbl->setStyleSheet("QLabel { background-color : white; color : black; }");
         }
+        QString str = QString::fromStdString(Debugger.get_temp_state());
+        ui->label_state->setText(str);
+        std::string step;
+        Turing::Command cmd = Debugger.get_next_step();
+        if (cmd.new_state == "") {
+            step = "No suitable transition";
+        }
+        else {
+            step += cmd.new_state;
+            step += " ; ";
+            step += cmd.new_symbol;
+            if (cmd.move == Turing::Command::Right)
+                step += " ; Right";
+            else if (cmd.move == Turing::Command::Left)
+                step += " ; Left";
+            else
+                step += " ; Center";
+        }
+        QString str2 = QString::fromStdString(step);
+        ui->label_step->setText(str2);
     }
 }
 
@@ -199,7 +207,8 @@ void MainWindow::on_pushButton_clicked()
 {
     m_state = Turing::EndOfProgram;
     Turing::Handler& Debugger = Turing::Handler::instance();
-
+    ui->label_state->setText(QString());
+    ui->label_step->setText(QString());
     TuringInterpreter* intr = new TuringInterpreter;
     auto commands = ui->lineEdit->text();
     try {
@@ -236,6 +245,26 @@ void MainWindow::on_pushButton_clicked()
         ui->horizontalLayout_3->insertWidget(obj.first(), newlbl);
     }
     dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : blue; color : white; }");
+    QString str = QString::fromStdString(Debugger.get_temp_state());
+    ui->label_state->setText(str);
+    std::string step;
+    Turing::Command cmd = Debugger.get_next_step();
+    if (cmd.new_state == "") {
+        step = "No suitable transition";
+    }
+    else {
+        step += cmd.new_state;
+        step += " ; ";
+        step += cmd.new_symbol;
+        if (cmd.move == Turing::Command::Right)
+            step += " ; Right";
+        else if (cmd.move == Turing::Command::Left)
+            step += " ; Left";
+        else
+            step += " ; Center";
+    }
+    QString str2 = QString::fromStdString(step);
+    ui->label_step->setText(str2);
 }
 
 void delay()

@@ -90,6 +90,8 @@ namespace Turing {
         bool isFirst() const;
         const Belt& getBelt() const;
         const int get_temp_index() const;
+        const state get_temp_state() const;
+               const Turing::Command get_next_step();
     };
 }
 
