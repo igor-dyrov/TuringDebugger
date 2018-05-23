@@ -32,13 +32,31 @@ Turing::Belt::Belt(const belt_type &belt) {
     beg_index = get_min_key(internal_belt);
 }
 
+Turing::Belt::Iterator Turing::Belt::begin() {
+    Turing::Belt::Iterator iter;
+    iter.itr = internal_belt.begin();
+    iter.cont = &internal_belt;
+    iter.first = iter.itr->first;
+    iter.second = iter.itr->second;
+    return iter;
+}
+
+Turing::Belt::Iterator Turing::Belt::end() {
+    Turing::Belt::Iterator iter;
+    iter.itr = internal_belt.end();
+    iter.cont = &internal_belt;
+    iter.first = iter.itr->first;
+    iter.second = iter.itr->second;
+    return iter;
+}
+
 Turing::Belt& Turing::Belt::operator=(const Turing::Belt & obj) {
     internal_belt = obj.internal_belt;
     beg_index = obj.beg_index;
     return *this;
 }
 
-int Turing::Belt::Begin() { return beg_index; }
+int Turing::Belt::Begin() const { return beg_index; }
 
 void Turing::Belt::clear() {
     internal_belt.clear();
@@ -59,6 +77,46 @@ const belt_type &Turing::Belt::getBelt() const
     return internal_belt;
 }
 
+
+
+
+Turing::Belt::Iterator::Iterator(const Turing::Belt::Iterator& other) {
+    cont = other.cont;
+    itr = other.itr;
+    first = other.first;
+    second = other.second;
+}
+
+Turing::Belt::Iterator& Turing::Belt::Iterator::operator =(const Turing::Belt::Iterator& other){
+    cont = other.cont;
+    itr = other.itr;
+    first = other.first;
+    second = other.second;
+    return *this;
+}
+
+Turing::Belt::Iterator& Turing::Belt::Iterator::operator ++() {
+    itr++;
+    first = itr->first;
+    second = itr->second;
+    return *this;
+}
+
+Turing::Belt::Iterator& Turing::Belt::Iterator::operator --() {
+    itr--;
+    first = itr->first;
+    second = itr->second;
+    return *this;
+}
+
+bool Turing::Belt::Iterator::operator ==(const Turing::Belt::Iterator& other) {
+    return (itr == other.itr && cont == other.cont);
+}
+
+bool Turing::Belt::Iterator::operator !=(const Turing::Belt::Iterator& other) {
+    return !(*this == other);
+}
+
 namespace Turing {
     std::ostream &operator << (std::ostream &os, const Turing::Belt &obj) {
         for (auto const &i : obj.internal_belt)
@@ -67,6 +125,9 @@ namespace Turing {
         return os;
     }
 }
+
+
+
 
 //Turing::Handler::Handler(const transitions_set &dict, const Belt &new_belt,
 //                         const state &beg, const std::vector<state> &end) {
@@ -93,7 +154,7 @@ void Turing::Handler::setFields(const transitions_set &dict, const Belt &new_bel
     end_states = end;
 }
 
-std::string Turing::Handler::GetBeltValues() {
+std::string Turing::Handler::GetBeltValues() const {
     std::stringstream str;
     str << belt;
     return str.str();
@@ -201,7 +262,7 @@ void Turing::Handler::SetCommands(request_pool &pool) {
     }
 }
 
-bool Turing::Handler::isFirst()
+bool Turing::Handler::isFirst() const
 {
     return history.empty();
 }

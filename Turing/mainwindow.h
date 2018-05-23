@@ -10,6 +10,9 @@
 #include <QMenuBar>
 #include <QAction>
 #include <QFileDialog>
+#include <QTimer>
+#include <QTime>
+#include <QLabel>
 #include "settings.hpp"
 #include "TM.hpp"
 #include "Lang.hpp"
@@ -23,7 +26,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private slots:
-
     void on_LoadCmdBtn_clicked();
     void on_actionSave_triggered();
 
@@ -31,11 +33,15 @@ private slots:
 
     void on_actionNew_triggered();
 
-    void on_btnOneStep_clicked();
+    Turing::ResultCode on_btnOneStep_clicked();
 
     void on_btnStepBefore_clicked();
 
     void on_pushButton_clicked();
+
+    void on_StartDebugBtn_clicked();
+
+    void on_PauseDebugBtn_clicked();
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -43,6 +49,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Turing::ResultCode m_state = Turing::EndOfProgram;
 };
 
 #endif // MAINWINDOW_H
