@@ -13,11 +13,25 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/img/Mashina_Tjuringa-2.jpg</normaloff>:/img/Mashina_Tjuringa-2.jpg</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="9" column="3">
+     <widget class="QPushButton" name="StartDebugBtn">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(4, 37, 187);</string>
+      </property>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </widget>
+    </item>
     <item row="10" column="0">
      <spacer name="horizontalSpacer">
       <property name="orientation">
@@ -34,13 +48,13 @@
       </property>
      </spacer>
     </item>
-    <item row="9" column="3">
-     <widget class="QPushButton" name="StartDebugBtn">
+    <item row="9" column="2">
+     <widget class="QPushButton" name="btnStepBefore">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(4, 37, 187);</string>
       </property>
       <property name="text">
-       <string>Start</string>
+       <string>StepBefore</string>
       </property>
      </widget>
     </item>
@@ -68,13 +82,20 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="2">
-     <widget class="QPushButton" name="btnStepBefore">
+    <item row="8" column="1" colspan="2">
+     <widget class="QPushButton" name="pushButton">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(4, 37, 187);</string>
       </property>
       <property name="text">
-       <string>StepBefore</string>
+       <string>Set Belt</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" rowspan="5" colspan="2">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>TextLabel</string>
       </property>
      </widget>
     </item>
@@ -94,7 +115,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>901</width>
+         <width>907</width>
          <height>78</height>
         </rect>
        </property>
@@ -102,13 +123,20 @@
       </widget>
      </widget>
     </item>
-    <item row="9" column="1">
-     <widget class="QPushButton" name="btnOneStep">
+    <item row="9" column="4">
+     <widget class="QPushButton" name="PauseDebugBtn">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(4, 37, 187);</string>
       </property>
       <property name="text">
-       <string>OneStep</string>
+       <string>Pause</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1" colspan="2">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="placeholderText">
+       <string>Enter your belt(symbols splited by spaces)</string>
       </property>
      </widget>
     </item>
@@ -128,37 +156,65 @@
       </property>
      </spacer>
     </item>
-    <item row="9" column="4">
-     <widget class="QPushButton" name="PauseDebugBtn">
+    <item row="9" column="1">
+     <widget class="QPushButton" name="btnOneStep">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(4, 37, 187);</string>
       </property>
       <property name="text">
-       <string>Pause</string>
+       <string>OneStep</string>
       </property>
      </widget>
     </item>
-    <item row="8" column="1" colspan="2">
-     <widget class="QPushButton" name="pushButton">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(4, 37, 187);</string>
+    <item row="11" column="1">
+     <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
-       <string>Set Belt</string>
+       <string>Temp state: </string>
       </property>
      </widget>
     </item>
-    <item row="7" column="1" colspan="2">
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="placeholderText">
-       <string>Enter your belt(symbols splited by spaces)</string>
+    <item row="12" column="1">
+     <widget class="QLabel" name="label_3">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="1" rowspan="5" colspan="2">
-     <widget class="QLabel" name="label">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Next step: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="2">
+     <widget class="QLabel" name="label_state">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="2">
+     <widget class="QLabel" name="label_step">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </item>
@@ -224,6 +280,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

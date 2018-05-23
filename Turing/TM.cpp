@@ -273,3 +273,22 @@ const int Turing::Handler::get_temp_index() const
     return temp_index;
 }
 
+const state Turing::Handler::get_temp_state() const {
+    return temp_state;
+}
+
+const Turing::Command Turing::Handler::get_next_step() {
+    Command to_do;
+    try {
+        Situation temp;
+        temp._state = temp_state;
+        temp._symbol = belt[temp_index];
+        to_do = transitions[temp];
+    }
+    catch (...) {
+    }
+    return to_do;
+}
+
+
+
