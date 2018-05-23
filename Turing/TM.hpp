@@ -24,7 +24,7 @@ namespace Turing {
 namespace Turing {
     class Belt {
     private:
-        const symbol lambda = "lambda";
+        const symbol lambda = "e";
         belt_type internal_belt;
         int beg_index;
     public:
@@ -51,8 +51,8 @@ namespace Turing {
             bool operator != (const Iterator&);
             ~Iterator() = default;
             friend class Belt;
-            int first;
-            symbol second;
+            int first();
+            symbol second();
         };
         Iterator begin();
         Iterator end();
