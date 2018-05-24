@@ -82,6 +82,7 @@ namespace Turing {
         static Handler& instance();
         void setFields(const transitions_set &, const Belt &, const state &, const std::vector<state> &);
         void setBelt(const Belt &new_belt);
+        void setIndex(int i);
         ResultCode OneStep();
         ResultCode StepBefore();
         std::string GetBeltValues() const;

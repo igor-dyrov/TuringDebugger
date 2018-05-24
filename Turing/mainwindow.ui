@@ -73,6 +73,18 @@
     </item>
     <item row="0" column="3" rowspan="8" colspan="2">
      <widget class="QTextEdit" name="CommandsEdit">
+      <property name="minimumSize">
+       <size>
+        <width>350</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <family>Latin Modern Roman</family>
@@ -101,10 +113,16 @@
     </item>
     <item row="10" column="1" colspan="4">
      <widget class="QScrollArea" name="scrollArea">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>90</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>80</height>
+        <height>90</height>
        </size>
       </property>
       <property name="widgetResizable">
@@ -116,7 +134,7 @@
          <x>0</x>
          <y>0</y>
          <width>907</width>
-         <height>78</height>
+         <height>88</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3"/>
@@ -130,13 +148,6 @@
       </property>
       <property name="text">
        <string>Pause</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="1" colspan="2">
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="placeholderText">
-       <string>Enter your belt(symbols splited by spaces)</string>
       </property>
      </widget>
     </item>
@@ -163,19 +174,6 @@
       </property>
       <property name="text">
        <string>One Step</string>
-      </property>
-     </widget>
-    </item>
-    <item row="11" column="1">
-     <widget class="QLabel" name="label_2">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Temp state: </string>
       </property>
      </widget>
     </item>
@@ -215,6 +213,39 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="placeholderText">
+       <string>Enter your belt(symbols splited by spaces)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Temp state: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="2">
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="maximumSize">
+       <size>
+        <width>90</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>index here</string>
       </property>
      </widget>
     </item>

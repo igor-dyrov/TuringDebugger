@@ -141,6 +141,11 @@ void Turing::Handler::setBelt(const Belt &new_belt)
     temp_index = belt.Begin();
 }
 
+void Turing::Handler::setIndex(int i)
+{
+    temp_index = i;
+}
+
 void Turing::Handler::setFields(const transitions_set &dict, const Belt &new_belt,
                const state &beg, const std::vector<state> &end)
 {

@@ -216,6 +216,8 @@ void MainWindow::on_pushButton_clicked()
     Turing::Belt belt(new_belt);
     on_LoadCmdBtn_clicked();
     Debugger.setBelt(belt);
+    if ( ui->lineEdit_2->text() != QString("index here") )
+        Debugger.setIndex(ui->lineEdit_2->text().toInt());
     }
     catch (InterpretException e){
         QMessageBox msgBox;
@@ -244,7 +246,7 @@ void MainWindow::on_pushButton_clicked()
         newlbl->setAlignment(Qt::AlignCenter);
         ui->horizontalLayout_3->insertWidget(obj.first(), newlbl);
     }
-    dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(0)->widget())->setStyleSheet("QLabel { background-color : blue; color : white; }");
+    dynamic_cast<QLabel*>(ui->horizontalLayout_3->itemAt(Debugger.get_temp_index())->widget())->setStyleSheet("QLabel { background-color : blue; color : white; }");
     QString str = QString::fromStdString(Debugger.get_temp_state());
     ui->label_state->setText(str);
     std::string step;
