@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Turing Debugger</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
@@ -54,7 +54,7 @@
        <string notr="true">background-color: rgb(4, 37, 187);</string>
       </property>
       <property name="text">
-       <string>StepBefore</string>
+       <string>Step Before</string>
       </property>
      </widget>
     </item>
@@ -162,7 +162,7 @@
        <string notr="true">background-color: rgb(4, 37, 187);</string>
       </property>
       <property name="text">
-       <string>OneStep</string>
+       <string>One Step</string>
       </property>
      </widget>
     </item>
